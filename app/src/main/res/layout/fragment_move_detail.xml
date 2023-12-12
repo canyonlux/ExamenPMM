@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+        <variable
+            name="move"
+            type="com.example.examenfinal.models.Move" />
+    </data>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:paddingLeft="50dp"
+        android:paddingRight="25dp"
+        android:gravity="center_horizontal">
+
+        <!-- Título del movimiento -->
+        <TextView
+            android:id="@+id/textViewMoveTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Movimiento"
+            android:textSize="34sp"
+            android:textStyle="bold"
+            android:layout_marginTop="16dp"/>
+
+        <!-- Nombre del movimiento -->
+        <TextView
+            android:id="@+id/textViewName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@{move.name}"
+            android:textSize="34sp"
+            android:textStyle="bold"
+            android:textAlignment="center" />
+
+        <!-- Título de precisión -->
+        <TextView
+            android:id="@+id/textViewAccuracyTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Precisión"
+            android:textSize="34sp"
+            android:textStyle="bold"
+            android:layout_marginTop="16dp"/>
+
+        <!-- Valor de precisión -->
+        <TextView
+            android:id="@+id/textViewAccuracy"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@{`Accuracy: ` + move.accuracy}"
+            android:textSize="34sp"
+            android:textStyle="bold"
+            android:background="#0000FF"
+            android:backgroundTint="@color/teal_200" />
+
+        <!-- Título de la lista de Pokémon -->
+        <TextView
+            android:id="@+id/textViewPokemonListTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Pokémon"
+            android:textSize="34sp"
+            android:textStyle="bold"
+            android:layout_marginTop="16dp"/>
+
+        <!-- Lista de Pokémon -->
+        <TextView
+            android:id="@+id/textViewPokemonList"
+            android:layout_width="match_parent"
+            android:layout_height="500dp"
+            android:text="@{move.pokemonsString}"
+            android:textSize="34sp"
+            android:textStyle="italic"
+            android:background="#0000FF"
+            android:backgroundTint="@color/teal_200"
+            android:scrollbars="vertical"/>
+
+    </LinearLayout>
+</layout>
