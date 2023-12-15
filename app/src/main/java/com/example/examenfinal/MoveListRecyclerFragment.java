@@ -18,54 +18,63 @@ import com.example.examenfinal.databinding.ViewholderMoveListBinding;
 
 import com.example.examenfinal.models.MoveListItem;
 
-import java.util.ArrayList;
 import java.util.List;
 
-public class MoveListRecyclerFragment extends Fragment {
+
+public class MoveListRecyclerFragment extends Fragment { // Fragmento para la lista de movimientos
     private FragmentMoveListRecyclerBinding binding;
     private MovesViewModel movesViewModel;
     private NavController navController;
 
+
     @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) { // Metodo para crear la vista del fragmento
         return (binding = FragmentMoveListRecyclerBinding.inflate(inflater, container, false)).getRoot();
     }
 
+
     @Override
-    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) { // Metodo para crear el fragmento
         super.onViewCreated(view, savedInstanceState);
         movesViewModel = new ViewModelProvider(requireActivity()).get(MovesViewModel.class);
         navController = Navigation.findNavController(view);
         MovesAdapter movesAdapter = new MovesAdapter();
         binding.recyclerView.setAdapter(movesAdapter);
 
-        // Cuando cambia el viewmodel se actualiza la lista con setList(List<MoveListItem> moveList)
         movesViewModel.getAll().observe(getViewLifecycleOwner(), movesAdapter::setList);
     }
 
-    class MovesAdapter extends RecyclerView.Adapter<MoveViewHolder> {
-        List<MoveListItem> moveList = new ArrayList<>();
+
+    class MovesAdapter extends RecyclerView.Adapter<MoveViewHolder> { // Adaptador para la lista de movimientos
+        List<MoveListItem> moveList;
+
 
         @NonNull
         @Override
-        public MoveViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        public MoveViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) { // Metodo para crear el ViewHolder
             return new MoveViewHolder(ViewholderMoveListBinding.inflate(getLayoutInflater(), parent, false));
         }
+
 
         @Override
         public void onBindViewHolder(@NonNull MoveViewHolder holder, int position) {
             MoveListItem element = moveList.get(position);
             holder.binding.setMove(element);
-            holder.itemView.setOnClickListener(v -> {
-                movesViewModel.select(element);
-                navController.navigate(R.id.action_moveListRecyclerFragment_to_moveDetailFragment);
+            holder.itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    movesViewModel.select(element);
+                    navController.navigate(R.id.action_moveListRecyclerFragment_to_moveDetailFragment);
+                }
             });
         }
+
 
         @Override
         public int getItemCount() {
             return moveList != null ? moveList.size() : 0;
         }
+
 
         public void setList(List<MoveListItem> moveList){
             this.moveList = moveList;
@@ -73,10 +82,12 @@ public class MoveListRecyclerFragment extends Fragment {
         }
     }
 
-    static class MoveViewHolder extends RecyclerView.ViewHolder {
-        final ViewholderMoveListBinding binding;
 
-        MoveViewHolder(ViewholderMoveListBinding binding) {
+    static class MoveViewHolder extends RecyclerView.ViewHolder {
+        private final ViewholderMoveListBinding binding;
+
+
+        public MoveViewHolder(ViewholderMoveListBinding binding) {
             super(binding.getRoot());
             this.binding = binding;
         }

@@ -4,81 +4,120 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
+
         <variable
             name="move"
             type="com.example.examenfinal.models.Move" />
     </data>
 
-    <LinearLayout
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical"
-        android:paddingLeft="50dp"
-        android:paddingRight="25dp"
-        android:gravity="center_horizontal">
+        android:layout_height="match_parent">
 
-        <!-- Título del movimiento -->
         <TextView
-            android:id="@+id/textViewMoveTitle"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Movimiento"
-            android:textSize="34sp"
-            android:textStyle="bold"
-            android:layout_marginTop="16dp"/>
-
-        <!-- Nombre del movimiento -->
-        <TextView
-            android:id="@+id/textViewName"
+            android:id="@+id/titleMovement"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@{move.name}"
-            android:textSize="34sp"
-            android:textStyle="bold"
-            android:textAlignment="center" />
-
-        <!-- Título de precisión -->
-        <TextView
-            android:id="@+id/textViewAccuracyTitle"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Precisión"
-            android:textSize="34sp"
-            android:textStyle="bold"
-            android:layout_marginTop="16dp"/>
-
-        <!-- Valor de precisión -->
-        <TextView
-            android:id="@+id/textViewAccuracy"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@{`Accuracy: ` + move.accuracy}"
-            android:textSize="34sp"
-            android:textStyle="bold"
-            android:background="#0000FF"
-            android:backgroundTint="@color/teal_200" />
-
-        <!-- Título de la lista de Pokémon -->
-        <TextView
-            android:id="@+id/textViewPokemonListTitle"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Pokémon"
-            android:textSize="34sp"
-            android:textStyle="bold"
-            android:layout_marginTop="16dp"/>
-
-        <!-- Lista de Pokémon -->
-        <TextView
-            android:id="@+id/textViewPokemonList"
-            android:layout_width="match_parent"
-            android:layout_height="500dp"
-            android:text="@{move.pokemonsString}"
-            android:textSize="34sp"
-            android:textStyle="italic"
-            android:background="#0000FF"
+            android:layout_marginStart="50dp"
+            android:layout_marginEnd="25dp"
+            android:background="@color/bkground"
             android:backgroundTint="@color/teal_200"
-            android:scrollbars="vertical"/>
+            android:text="@string/movement"
+            android:textAlignment="center"
+            android:textSize="34sp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
-    </LinearLayout>
+        <TextView
+            android:id="@+id/tvMoveName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="50dp"
+            android:layout_marginEnd="25dp"
+            android:background="@color/bkground"
+            android:backgroundTint="@color/teal_200"
+            android:text="@{move.name}"
+            android:textAlignment="center"
+            android:textSize="34sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/titleMovement" />
+
+        <TextView
+            android:id="@+id/tvTitleAccuracy"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="50dp"
+            android:layout_marginEnd="25dp"
+            android:background="@color/bkground"
+            android:backgroundTint="@color/teal_200"
+            android:text="@string/accuracy"
+            android:textAlignment="center"
+            android:textSize="34sp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tvMoveName" />
+
+
+        <TextView
+            android:id="@+id/tvAccuracy"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="50dp"
+            android:layout_marginEnd="25dp"
+            android:background="@color/bkground"
+            android:backgroundTint="@color/teal_200"
+            android:text="@{move.accuracy}"
+            android:textAlignment="center"
+            android:textSize="34sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tvTitleAccuracy" />
+
+        <TextView
+            android:id="@+id/tvTitlePokemon"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="50dp"
+            android:layout_marginEnd="25dp"
+            android:background="@color/bkground"
+            android:backgroundTint="@color/teal_200"
+            android:text="@string/pokemon"
+            android:textAlignment="center"
+            android:textSize="34sp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tvAccuracy" />
+
+        <ScrollView
+            android:layout_width="0dp"
+            android:layout_height="400dp"
+            android:layout_marginTop="10dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tvTitlePokemon"
+            app:layout_constraintBottom_toBottomOf="parent">
+
+            <TextView
+                android:id="@+id/tvPokemon"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="#000000"
+                android:backgroundTint="@color/teal_200"
+                android:text="@{move.getPokemonsString}"
+                android:textAlignment="center"
+                android:textSize="24sp"
+                android:textStyle="italic"
+                android:shadowColor="#FFFFFF"
+                android:shadowDx="1"
+                android:shadowDy="1"
+                android:shadowRadius="2" />
+        </ScrollView>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
 </layout>

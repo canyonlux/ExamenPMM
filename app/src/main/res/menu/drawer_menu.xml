@@ -1,14 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item
-        android:id="@+id/nav_move_list"
-        android:title="Listado de movimientos"
-        android:icon="@drawable/pokeb" />
+        android:id="@+id/moveListRecyclerFragment"
+        android:icon="@drawable/pokeb"
+        android:title="Listado de movimentos" />
+
     <item
-        android:id="@+id/nav_item_list"
-        android:title="Listado de ítems"
-        android:icon="@drawable/pokeb" />
+        android:id="@+id/itemListRecyclerFragment"
+        android:icon="@drawable/pokeb"
+        android:title="Listado de items" />
+
     <item
-        android:id="@+id/nav_random_item"
-        android:title="Ítem aleatorio"
-        android:icon="@drawable/pokeb" />
+        android:id="@+id/itemsDetailsFragment"
+        android:icon="@drawable/pokeb"
+        android:title="Item aleatorio" />
 </menu>

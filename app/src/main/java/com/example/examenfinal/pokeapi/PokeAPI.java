@@ -14,14 +14,15 @@ import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 import com.example.examenfinal.models.*;
 
-public class PokeAPI {
-    private static Retrofit retrofit = new Retrofit.Builder()
+public class PokeAPI { // Clase que se encarga de hacer las peticiones a la API
+    private static final Retrofit retrofit = new Retrofit.Builder() // Se crea el objeto retrofit
             .baseUrl("https://pokeapi.co/api/v2/")
             .addConverterFactory(GsonConverterFactory.create())
             .build();
-    private static PokeAPIService service = retrofit.create(PokeAPIService.class);
+    private static final PokeAPIService service = retrofit.create(PokeAPIService.class); // Se crea el servicio
 
-    public static void getMoveList(MutableLiveData<List<MoveListItem>> moveList){
+
+    public static void getMoveList(MutableLiveData<List<MoveListItem>> moveList){ // Método que obtiene la lista de movimientos
         Call<MoveList> pokeCall = service.getMoveList(844, 0);
         pokeCall.enqueue(new Callback<MoveList>() {
             @Override
@@ -44,7 +45,8 @@ public class PokeAPI {
         });
     }
 
-    public static void getMove(String name, MutableLiveData<Move> move) {
+
+    public static void getMove(String name, MutableLiveData<Move> move) { // Método que obtiene un movimiento
         Call<Move> pokeCall = service.getMoveById(name);
         pokeCall.enqueue(new Callback<Move>() {
             @Override
@@ -67,4 +69,49 @@ public class PokeAPI {
     }
 
 
+    public static void getItemList(MutableLiveData<List<ItemListDetail>> listItems) { // Método que obtiene la lista de objetos
+        Call<ItemList> pokeCall = service.getItemList(844, 0);
+        pokeCall.enqueue(new Callback<ItemList>() {
+            @Override
+            public void onResponse(@NonNull Call<ItemList> call, @NonNull Response<ItemList> response) {
+                if (response.isSuccessful()) {
+                    ItemList list = response.body();
+                    if (list != null) {
+                        listItems.setValue(list.getResults());
+                    }
+
+                } else {
+                    Log.e("QWERTY", " onResponse: " + response.errorBody());
+                }
+            }
+
+            @Override
+            public void onFailure(@NonNull Call<ItemList> call, @NonNull Throwable t) {
+                Log.e("QWERTY", " onFailure: " + t.getMessage());
+            }
+        });
+    }
+
+
+    public static void getItem(String name, MutableLiveData<Item> item) { // Método que obtiene un objeto
+        Call<Item> pokeCall = service.getItemByName(name);
+        pokeCall.enqueue(new Callback<Item>() {
+            @Override
+            public void onResponse(@NonNull Call<Item> call, @NonNull Response<Item> response) {
+                if (response.isSuccessful()) {
+                    Item obj = response.body();
+                    if (obj != null) {
+                        item.setValue(obj);
+                    }
+                } else {
+                    Log.e("QWERTY", " onResponse: " + response.errorBody());
+                }
+            }
+
+            @Override
+            public void onFailure(@NonNull Call<Item> call, @NonNull Throwable t) { // Método que obtiene un objeto
+                Log.e("QWERTY", " onFailure: " + t.getMessage());
+            }
+        });
+    }
 }

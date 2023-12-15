@@ -1,67 +1,46 @@
 package com.example.examenfinal;
 
-import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.view.GravityCompat;
-import androidx.drawerlayout.widget.DrawerLayout;
-import androidx.fragment.app.Fragment;
 import androidx.lifecycle.MutableLiveData;
-import androidx.lifecycle.Observer;
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentTransaction;
+import androidx.navigation.NavController;
+import androidx.navigation.fragment.NavHostFragment;
+import androidx.navigation.ui.AppBarConfiguration;
+import androidx.navigation.ui.NavigationUI;
 
 import android.os.Bundle;
-import android.view.MenuItem;
-import androidx.appcompat.widget.Toolbar;
 
+import com.example.examenfinal.databinding.FragmentDrawerBinding;
 import com.example.examenfinal.models.MoveListItem;
 import com.example.examenfinal.pokeapi.PokeAPI;
-import com.google.android.material.navigation.NavigationView;
 
 import java.util.List;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity { // Actividad principal de la aplicacion
 
-    private DrawerLayout drawerLayout;
-    private NavigationView navigationView;
-    MutableLiveData<List<MoveListItem>> moveList = new MutableLiveData<>();
+    private FragmentDrawerBinding binding; // Binding para el menu lateral
+
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState) { // Metodo para crear la actividad
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
-
-        // Observa los cambios en la lista de movimientos y actualiza la UI correspondientemente
-        moveList.observe(this, new Observer<List<MoveListItem>>() {
-            @Override
-            public void onChanged(List<MoveListItem> moveListItems) {
-                // Actualiza tu RecyclerView/Adapter aquí
-                // Si tienes que manejar clics en los items, aquí es donde puedes añadir el listener
-                // y hacer la transición al MoveDetailFragment
-            }
-        });
-
-        // Inicializa la lista de movimientos
+        MutableLiveData<List<MoveListItem>> moveList = new MutableLiveData<>();
         PokeAPI.getMoveList(moveList);
-    }
 
-    public void showMoveDetailFragment(String moveName) {
-        MoveDetailFragment moveDetailFragment = MoveDetailFragment.newInstance(moveName);
-        FragmentManager fragmentManager = getSupportFragmentManager();
-        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-        fragmentTransaction.replace(R.id.fragment, moveDetailFragment);
-        fragmentTransaction.addToBackStack(null); // Añade la transacción al back stack para permitir al usuario navegar hacia atrás
-        fragmentTransaction.commit();
-    }
+        setContentView((binding = FragmentDrawerBinding.inflate(getLayoutInflater())).getRoot());
+        AppBarConfiguration appBarConfiguration = new AppBarConfiguration.Builder(
+                R.id.moveListRecyclerFragment
+        )
+                .setOpenableLayout(binding.drawerLayout)
+                .build();
 
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case android.R.id.home:
-                drawerLayout.openDrawer(GravityCompat.START);
-                return true;
-        }
-        return super.onOptionsItemSelected(item);
+
+
+        NavController navController = ((NavHostFragment) getSupportFragmentManager().findFragmentById(R.id.nav_drawer_host_fragment)).getNavController();
+        NavigationUI.setupWithNavController(binding.navView, navController);
+        NavigationUI.setupWithNavController(binding.toolbar, navController, appBarConfiguration);
+
+        binding.toolbar.setTitle("Aplicacion de pokemon");
     }
 }
+

@@ -2,7 +2,7 @@ package com.example.examenfinal.models;
 
 import com.google.gson.annotations.SerializedName;
 
-public class PokemonListItem {
+public class PokemonListItem { // Clase para guardar los datos de los Pokémon
     @SerializedName("name")
     private String name;
 

@@ -12,30 +12,31 @@ import com.example.examenfinal.pokeapi.PokeAPI;
 
 import java.util.List;
 
-public class MovesViewModel extends AndroidViewModel {
-    private final MutableLiveData<Move> selectedMoveMutableLiveData = new MutableLiveData<>();
-    private final MutableLiveData<List<MoveListItem>> listElementosMutableLiveData = new MutableLiveData<>();
-    private MoveListItem selected;
 
-    public MovesViewModel(@NonNull Application application) {
+public class MovesViewModel extends AndroidViewModel { // ViewModel para los movimientos
+    MutableLiveData<Move> selectedMoveMutableLiveData = new MutableLiveData<>();
+    MutableLiveData<List<MoveListItem>> listElementosMutableLiveData = new MutableLiveData<>();
+    MoveListItem selected;
+
+
+    public MovesViewModel(@NonNull Application application) { // Metodo para crear el ViewModel
         super(application);
         PokeAPI.getMoveList(listElementosMutableLiveData);
     }
+
 
     MutableLiveData<List<MoveListItem>> getAll(){
         return listElementosMutableLiveData;
     }
 
+
     public void select(MoveListItem moveListItem) {
-        // Solo realizar la llamada a la API si el elemento seleccionado es diferente
-        if (selected == null || !selected.equals(moveListItem)) {
-            selected = moveListItem;
-            PokeAPI.getMove(selected.getName(), selectedMoveMutableLiveData);
-        }
+        selected = moveListItem;
     }
 
+
     public MutableLiveData<Move> getSelected() {
+        PokeAPI.getMove(selected.getName(), selectedMoveMutableLiveData);
         return selectedMoveMutableLiveData;
     }
 }
-
